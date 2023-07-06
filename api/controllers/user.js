@@ -42,7 +42,7 @@ class UserController {
     try {
       const user = await User.create({
         ...body,
-        password: hash(password),
+        password: await hash(password),
       });
 
       res.status(201).json({
@@ -96,7 +96,7 @@ class UserController {
           .json({ status: false, message: 'utiliseur non trouvé' });
       }
 
-      if (compareHash(password, user.password) && auth._id === id) {
+      if (await compareHash(password, user.password) && auth._id === id) {
         let updatedUser;
 
         if (newPassword) {
@@ -104,7 +104,7 @@ class UserController {
             { _id: id },
             {
               ...body,
-              password: hash(password),
+              password: await hash(password),
             }
           );
         } else {
