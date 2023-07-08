@@ -1,7 +1,7 @@
-import Post from '../models/post.js';
-import User from '../models/user.js';
+import Post from "../models/post.js";
+import User from "../models/user.js";
 // eslint-disable-next-line no-unused-vars
-import express from 'express';
+import express from "express";
 
 class PostController {
   /**
@@ -46,11 +46,11 @@ class PostController {
       const post = await Post.findById(id);
 
       if (!post) {
-        throw new Error('Post non trouvé');
+        throw new Error("Post non trouvé");
       }
 
       if (post.useror !== user._id) {
-        throw new Error('action non authorisé');
+        throw new Error("action non authorisé");
       }
 
       await Post.updateOne({ id: post.id }, { ...req.body });
@@ -74,11 +74,11 @@ class PostController {
     try {
       const post = await Post.findById(id);
       if (!post) {
-        throw new Error('post non trouvé');
+        throw new Error("post non trouvé");
       }
 
       if (post.useror !== user._id) {
-        throw new Error('Action non authorisé');
+        throw new Error("Action non authorisé");
       }
 
       await Post.deleteOne({ _id: id });
@@ -104,8 +104,8 @@ class PostController {
       }
 
       const fullPost = await (
-        await post.populate('author', 'username fullname role email')
-      ).populate('comments');
+        await post.populate("author", "username fullname role email")
+      ).populate("comments");
 
       res.status(200).json({ status: true, post: { ...fullPost.toObject() } });
     } catch (e) {

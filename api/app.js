@@ -24,6 +24,7 @@ app.use(express.urlencoded({ extended: true }));
 app.use(express.static('public'));
 app.use(express.static(path.join(__dirname, '../dist')));
 
+
 app.use('/api/user', userRouter);
 app.use('/api/post', postRouter);
 app.use('/api/comment', commentRouter);
