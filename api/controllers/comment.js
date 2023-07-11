@@ -30,7 +30,7 @@ export class CommentController {
         author: user._id,
       });
 
-      await post.updateOne({ comments: { $push: newComment._id } });
+      await post.updateOne({ comments: { $push: {$each : [`${newComment._id}` ]}} });
 
       res.status(200).json({ status: true, message: newComment.toObject() });
     } catch (e) {
