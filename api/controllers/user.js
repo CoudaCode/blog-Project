@@ -29,6 +29,30 @@ class UserController {
         .json({ status: false, message: 'Erreur interne du serveur' });
     }
   }
+  /**
+   *
+   * @param {express.Request} req
+   * @param {express.Response} res
+   */
+  static async getAllUser(req, res) {
+    
+    try {
+      const user = await User.find({});
+      if (user) {
+        return res.status(200).json({
+          status: true,
+          message: { ...user},
+        });
+      }
+
+      res.status(404).json({ status: false, message: 'pas de liste utilisateur' });
+    } catch (e) {
+      console.log('erreur');
+      res
+        .status(500)
+        .json({ status: false, message: 'Erreur interne du serveur' });
+    }
+  }
 
   /**
    *
@@ -89,7 +113,7 @@ class UserController {
     try {
       const user = await User.findById(id);
       const auth = req.user;
-
+      console.log('auth', auth)
       if (!user) {
         return res
           .status(404)

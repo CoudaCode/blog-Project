@@ -12,7 +12,7 @@ class PostController {
   static async createPost(req, res) {
     try {
       const user = req.user;
-
+    console.log('user', user)
       const post = await Post.create({
         ...req.body,
         author: user._id,
@@ -21,9 +21,11 @@ class PostController {
       await User.findOneAndUpdate(
         { _id: user._id },
         {
-          posts: {
-            $push: post._id,
-          },
+          $push: {
+            posts: {
+              $each: [`${post._id}`]
+            }
+          }
         }
       );
 

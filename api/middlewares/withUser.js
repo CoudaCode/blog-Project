@@ -11,8 +11,6 @@ const withUser = (req, res, next) => {
   const token = req.cookies.token;
 
   const verifiedToken = verifyToken(token);
-  console.log("verifiedToken", verifiedToken)
-  console.log("token", token)
   if (verifiedToken) {
     req.user = verifiedToken;
   } else {
